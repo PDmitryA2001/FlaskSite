@@ -5,6 +5,20 @@
     <title>Title</title>
 </head>
 <body>
-<p>Hello there</p>
+<form name="form" id="form" method="POST" enctype="multipart/form-data">
+    <label for="poster_picture">Картинка для постера</label>
+    <input name="poster_picture" id="poster_picture" type="file"/>
+
+    <label for="poster_adress">Адрес</label>
+    <input name="poster_adress" id="poster_adress" type="text"/>
+
+    <label for="poster_name">Название мероприятия</label>
+    <input name="poster_name" id="poster_name" type="text"/>
+
+    <label for="poster_date">Дата</label>
+    <input name="poster_date" id="poster_date" type="datetime-local"/>
+
+    <button form="form" type="submit" value="Отправить данные"></button>
+</form>
 </body>
 </html>

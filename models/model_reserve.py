@@ -1,6 +1,6 @@
 from extentions import DB
 
-class Reserve(DB):
+class Reserve(DB.Model):
     id = DB.Column(DB.Integer, primary_key=True)
     name = DB.Column(DB.String, nullable=False)
     table_number = DB.Column(DB.String, nullable=False)
