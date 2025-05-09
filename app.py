@@ -4,6 +4,7 @@ from extentions import DB, migrate
 from route.upload_to_db import upload_to_db
 from route.image_to_react import image_to_react
 from route.routes import main
+from route.poster_send_json import poster_json
 from route.component_react import react_route
 import os
 
@@ -21,6 +22,7 @@ def create_app(config_class = Config):
     app.register_blueprint(main)
     app.register_blueprint(upload_to_db)
     app.register_blueprint(image_to_react)
+    app.register_blueprint(poster_json)
 
     app.register_blueprint(react_route, url_prefix='/')
 

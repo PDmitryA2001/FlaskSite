@@ -9,6 +9,6 @@ def react_funk(path):
     full_path = os.path.join(static_path, path)
 
     # Если файл существует и это не API-запрос
-    if path and os.path.exists(full_path) and not path.startswith('api/'):
+    if path and os.path.exists(full_path) and not path.startswith('/flaskapi/'):
         return send_from_directory(static_path, path)
     return send_from_directory(static_path, 'index.html')
