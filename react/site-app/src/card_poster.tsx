@@ -30,7 +30,9 @@ interface dateProps {
                         setCurrentItems(data_server)
 
                         setIsAnimation(true)
-                        await new Promise(resolve => setTimeout(resolve, 400));
+                        if (currentItems.length !== 0) {
+                            await new Promise(resolve => setTimeout(resolve, 400));
+                        }
                         setIsAnimation(false)
                     }
                     catch (error) {
@@ -45,7 +47,7 @@ interface dateProps {
         return (
             <div className={'container'}>
                 {isAnimation &&
-                    <div className={"fade_out"}>
+                    <div className={(oldItems.length === 0)   ? 'none' : "fade_out"}>
                         {oldItems.map(item => (<DynamicPoster data={item} key={'old-&{item.id}'}/>))}
                     </div>
                 }

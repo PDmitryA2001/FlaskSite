@@ -2,6 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Updater } from './card_poster'
 import { DateButtons } from './button_poster_date'
+import {Slider} from "./slider";
 import './index.css'
 const root = createRoot(document.getElementById('main')!);
 root.render(
@@ -48,9 +49,8 @@ root.render(
             </div>
          </div>
          <div className={"container_second_screen"}>
-                <div className={"place_for_slider"}>
 
-                </div>
+             <Slider />
                 <div className={"block_hero"}>
                     <div className={"text_block_hero_with_line"}>
                         <h2 className={"lora_medium_32_black"} style={{color: "#8A191D", margin: "0px 4px 0px 0px"}}>О РЕСТОРАНАХ EAT MEAT</h2>
