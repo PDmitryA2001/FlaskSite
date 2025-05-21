@@ -23,144 +23,76 @@ export const Slider = () =>
             picture: <img src={"./images/slider/slide_right.png"}/>,
         },
     ]
-    const [frontSlide, setFrontSlide] = useState(0)
+    const [sliders, setSliders] = useState({
+        front: 0,
+        left: 2,
+        right: 1,
+        animated: 0,
+    })
     const [click, setClick] = useState('none')
-    const [isAnimated, setIsAnimated] = useState(0)
-
-
-
     const right_click = async () =>
     {
         setClick('right')
-
-        setIsAnimated(1)
+        console.log(sliders.left + " LEVO ==========BEFORE CLICK====================")
+        console.log(sliders.left + " PRAVO")
+        console.log(sliders.left + " CENTER")
+        setSliders(prev => (
+            {
+                front: prev.front,
+                left: prev.left,
+                right: prev.right,
+                animated: 1,
+            }
+        ))
         await new Promise(resolve => setTimeout(resolve, 250));
-
-        setIsAnimated(2)
-        setFrontSlide((frontSlide+2) % slides.length);
+        setSliders(prev => (
+            {
+                front: prev.front,
+                left: prev.left,
+                right: prev.right,
+                animated: 2,
+            }
+        ))
         await new Promise(resolve => setTimeout(resolve, 250));
-        setIsAnimated(0)
+        setSliders(prev => (
+            {
+                front: prev.left,
+                left: prev.right,
+                right: prev.front,
+                animated: 0,
+            }
+        ))
     }
     const left_click = async () =>
     {
         setClick('left')
-        setIsAnimated(1)
-        await new Promise(resolve => setTimeout(resolve, 250));
-
-        setIsAnimated(2)
-        setFrontSlide((frontSlide+1) % slides.length)
-        await new Promise(resolve => setTimeout(resolve, 250));
-        setIsAnimated(0)
-    }
-
-    const take_text_block = (textPosition: string) =>
-    {
-        switch (textPosition) {
-            case "center":
-                return (
-                    <div className={"text_main_top"}>
-                        <p className={"lora_medium_32_black"}>{slides[frontSlide].adressBIG}</p>
-                        <p className={"lora_medium_24_black"}>{slides[frontSlide].adressSMALL}</p>
-                    </div>)
-            case "left":
-                if (isAnimated === 2) {
-                    if (click === "right")
-                    {
-                        return (
-                    <div className={"text_left"}>
-                        <p className={"firaSans_regular_16_grey"}>{slides[frontSlide].adressBIG}</p>
-                        <p className={"firaSans_regular_16_grey"}>{slides[frontSlide].adressSMALL}</p>
-                    </div>)
-                    }
-                    else
-                    {
-                        return (
-                    <div className={"text_left"}>
-                        <p className={"firaSans_regular_16_grey"}>{slides[return_right()].adressBIG}</p>
-                        <p className={"firaSans_regular_16_grey"}>{slides[return_right()].adressSMALL}</p>
-                    </div>)
-                    }
-                }
-                else return (
-                    <div className={"text_left"}>
-                        <p className={"firaSans_regular_16_grey"}>{slides[return_left()].adressBIG}</p>
-                        <p className={"firaSans_regular_16_grey"}>{slides[return_left()].adressSMALL}</p>
-                    </div>)
-
-            case "right":
-                if (isAnimated === 2) {
-                    if (click === "right")
-                    {
-                        return (
-                            <div className={"text_right"}>
-                                <p className={"firaSans_regular_16_grey"}>{slides[return_left()].adressBIG}</p>
-                                <p className={"firaSans_regular_16_grey"}>{slides[return_left()].adressSMALL}</p>
-                            </div>)
-                    }
-                    else
-                    {
-                        return (
-                    <div className={"text_right"}>
-                        <p className={"firaSans_regular_16_grey"}>{slides[frontSlide].adressBIG}</p>
-                        <p className={"firaSans_regular_16_grey"}>{slides[frontSlide].adressSMALL}</p>
-                    </div>)
-                    }
-                }
-                else return (
-                    <div className={"text_right"}>
-                        <p className={"firaSans_regular_16_grey"}>{slides[return_right()].adressBIG}</p>
-                        <p className={"firaSans_regular_16_grey"}>{slides[return_right()].adressSMALL}</p>
-                    </div>)
-
-            case "pic_right":
-                if (isAnimated === 2) {
-                    if (click === "right")
-                    {
-                        return (slides[return_left()].picture)
-                    }
-                    else
-                    {
-                        return (slides[frontSlide].picture)
-                    }
-                }
-                else return (slides[return_right()].picture)
-            case "pic_left":
-                {
-                if (isAnimated === 2) {
-                    if (click === "right")
-                    {
-                        return (slides[frontSlide].picture)
-                    }
-                    else
-                    {
-                        return (slides[return_right()].picture)
-                    }
-                }
-                else return (slides[return_left()].picture)
+                setSliders(prev => (
+            {
+                front: prev.front,
+                left: prev.left,
+                right: prev.right,
+                animated: 1,
             }
-            case "pic_front": {
-                if (isAnimated === 2) {
-                    if (click === "right")
-                    {
-                        return (slides[return_right()].picture)
-                    }
-                    else
-                    {
-                        return (slides[return_left()].picture)
-                    }
-                }
-                else return (slides[frontSlide].picture)
+        ))
+        await new Promise(resolve => setTimeout(resolve, 250));
+        setSliders(prev => (
+            {
+                front: prev.front,
+                left: prev.left,
+                right: prev.right,
+                animated: 2,
             }
-            default:
-                break;
-        }
-    }
-    const return_left = () => {
-        return (((frontSlide + 2) % slides.length))
-    }
-    const return_right = () =>
-    {
-        return (((frontSlide + 1) % slides.length))
+        ))
+
+        await new Promise(resolve => setTimeout(resolve, 250));
+        setSliders(prev => (
+            {
+                front: prev.right,
+                left: prev.front,
+                right: prev.left,
+                animated: 0,
+            }
+        ))
     }
 
     return (
@@ -173,75 +105,82 @@ export const Slider = () =>
                 <img style={{position: "absolute", right: "16px", top: "16px", zIndex: 2}} src={"./images/slider/button_next.png"}/>
             </button>
             {/*ТЕКСТ СЛЕВА СВЕРХУ*/}
-            <div className={`${!(isAnimated) ? 'slider_front_position' : ' '} 
-                             ${(click === 'right' && isAnimated) ? 'animation_front_slide_move_to_right' : 'slider_front_position'}
-                             ${(click === 'left' && isAnimated) ? 'animation_front_slide_move_to_left' : 'slider_front_position'}`}>
+            <div className={`${!(sliders.animated) ? 'slider_front_position' : ' '} 
+                             ${(click === 'right' && sliders.animated) ? 'animation_front_slide_move_to_right' : 'slider_front_position'}
+                             ${(click === 'left' && sliders.animated) ? 'animation_front_slide_move_to_left' : 'slider_front_position'}`}>
                 <div className={`${(click === 'none') ? 'none' : ''}, 
-                                 ${(click === 'right' && (isAnimated === 2)) ? 'text_left_animation_fade_in' : 'none'}`}>
-                    {take_text_block("left")}
+                                ${(click === 'left' && (sliders.animated === 2)) ? 'text_left_animation_fade_in' : 'none'}`}>
+                        <p className={"firaSans_regular_16_grey"}>{slides[sliders.front].adressBIG}</p>
+                        <p className={"firaSans_regular_16_grey"}>{slides[sliders.front].adressSMALL}</p>
                 </div>
                 {/*ТЕКСТ СПРАВА СВЕРХУ*/}
                 <div className={`${(click === 'none') ? 'none' : ''} 
-                               ${((click === 'right') && (isAnimated === 2)) ? 'text_right_animation_fade_in' : 'none'}`
+                               ${((click === 'right') && (sliders.animated === 2)) ? 'text_right_animation_fade_in' : 'none'}`
                 }>
-                    {take_text_block("right")}
+                    <p className={"firaSans_regular_16_grey"}>{slides[sliders.front].adressBIG}</p>
+                    <p className={"firaSans_regular_16_grey"}>{slides[sliders.front].adressSMALL}</p>
                 </div>
                 {/*ОСНОВНОЙ ТЕКСТ СНИЗУ*/}
-                <div className={`${(isAnimated) ? 'front_text_fade_out' : ''}`}>
-                    {take_text_block("center")}
+                <div className={`${(sliders.animated) ? 'front_text_fade_out' : 'text_main_top'}`}>
+                    <p className={"lora_medium_32_black"}>{slides[sliders.front].adressBIG}</p>
+                    <p className={"lora_medium_24_black"}>{slides[sliders.front].adressSMALL}</p>
                 </div>
-                <div className={(isAnimated > 0) ? "front_picture_scale" : "front_picture"}>
-                    {take_text_block("pic_front")}
+                <div className={(sliders.animated > 0) ? "front_picture_scale" : "front_picture"}>
+                    {slides[sliders.front].picture}
                 </div>
             </div>
 
             <div className={`${(click === 'none') ? 'slider_left_position' : ' '} 
-                             ${(click === 'right' && isAnimated) ? 'animation_left_slide_move_to_center' : 'slider_left_position'}
-                             ${(click === 'left' && isAnimated) ? 'animation_left_slide_move_to_right' : 'slider_left_position'}`}>
+                             ${(click === 'right' && sliders.animated) ? 'animation_left_slide_move_to_center' : 'slider_left_position'}
+                             ${(click === 'left' && sliders.animated) ? 'animation_left_slide_move_to_right' : 'slider_left_position'}`}>
                 {/*ТЕКСТ СЛЕВА СВЕРХУ*/}
-                <div  className={`${(isAnimated) ? 'text_left_animation_fade_out' : ''}`}>
-                    {take_text_block("left")}
+                <div className={`${(sliders.animated) ? 'text_left_animation_fade_out' : 'text_left'}`}>
+                    <p className={"firaSans_regular_16_grey"}>{slides[sliders.left].adressBIG}</p>
+                    <p className={"firaSans_regular_16_grey"}>{slides[sliders.left].adressSMALL}</p>
                 </div>
                 {/*ТЕКСТ СПРАВА СВЕРХУ*/}
                 <div className={`${(click === 'none') ? 'none' : ''} 
-                                 ${(click === 'left' && (isAnimated === 2)) ? 'text_right_animation_fade_in' : 'none'}`
+                                 ${(click === 'left' && (sliders.animated === 2)) ? 'text_right_animation_fade_in' : 'none'}`
                 }>
-                    {take_text_block("right")}
+                    <p className={"firaSans_regular_16_grey"}>{slides[sliders.left].adressBIG}</p>
+                    <p className={"firaSans_regular_16_grey"}>{slides[sliders.left].adressSMALL}</p>
                 </div>
                 {/*ОСНОВНОЙ ТЕКСТ СНИЗУ*/}
-                <div   className={`${(click === 'none') ? 'none' : ''} 
-                                   ${(click === 'right' && (isAnimated === 2)) ? 'front_text_fade_in' : 'none'}`
+                <div className={`${(click === 'none') ? 'none' : ''} 
+                                   ${(click === 'right' && (sliders.animated === 2)) ? 'front_text_fade_in' : 'none'}`
                 }>
-                    {take_text_block("center")}
+                    <p className={"lora_medium_32_black"}>{slides[sliders.left].adressBIG}</p>
+                    <p className={"lora_medium_24_black"}>{slides[sliders.left].adressSMALL}</p>
                 </div>
-                <div className={`${( (isAnimated === 0) || (click === 'left')) ? 'side_picture' : 'side_picture_scale_to_center'}`}>
-                    {take_text_block("pic_left")}
+                <div className={`${((sliders.animated === 0) || (click === 'left')) ? 'side_picture' : 'side_picture_scale_to_center'}`}>
+                    {slides[sliders.left].picture}
                 </div>
             </div>
-    {/*//     side_picture_scale_to_center "side_picture"*/}
-
-            <div className={`${!(isAnimated) ? 'slider_right_position' : ' '} 
-                             ${(click === 'right' && isAnimated) ? 'animation_right_slide_move_to_left' : 'slider_right_position'}
-                             ${(click === 'left' && isAnimated) ? 'animation_right_slide_move_to_center' : 'slider_right_position'}`}>
+            <div className={`${!(sliders.animated) ? 'slider_right_position' : ' '} 
+                             ${(click === 'right' && sliders.animated) ? 'animation_right_slide_move_to_left' : 'slider_right_position'}
+                             ${(click === 'left' && sliders.animated) ? 'animation_right_slide_move_to_center' : 'slider_right_position'}`}>
                 {/*ТЕКСТ СЛЕВА СВЕРХУ*/}
                 <div className={`${(click === 'none') ? 'none' : ''} 
-                               ${(click === 'right' && (isAnimated === 2)) ? 'text_left_animation_fade_in' : 'none'}`
+                               ${(click === 'right' && (sliders.animated === 2)) ? 'text_left_animation_fade_in' : 'none'}`
                 }>
-                    {take_text_block("left")}
+                    <p className={"firaSans_regular_16_grey"}>{slides[sliders.right].adressBIG}</p>
+                    <p className={"firaSans_regular_16_grey"}>{slides[sliders.right].adressSMALL}</p>
                 </div>
                 {/*ТЕКСТ СПРАВА СВЕРХУ*/}
-                <div className={`${(!isAnimated) ? '' : 'text_right_animation_fade_out'}`}>
-                    {take_text_block("right")}
+                <div className={`${(!sliders.animated) ? 'text_right' : 'text_right_animation_fade_out'}`}>
+                    <p className={"firaSans_regular_16_grey"}>{slides[sliders.right].adressBIG}</p>
+                    <p className={"firaSans_regular_16_grey"}>{slides[sliders.right].adressSMALL}</p>
                     {/*    text_right_animation_fade_out*/}
                 </div>
                 {/*ОСНОВНОЙ ТЕКСТ СНИЗУ*/}
-                <div className={`${!(isAnimated === 0) ? 'none' : ''} 
-                                 ${((click === 'right') || (isAnimated < 2)) ? 'none' : 'front_text_fade_in'}`}>
-                    {take_text_block("center")}
+                <div className={`${!(sliders.animated === 0) ? 'none' : ''} 
+                                 ${((click === 'right') || (sliders.animated < 2)) ? 'none' : 'front_text_fade_in'}`}>
+                    <p className={"lora_medium_32_black"}>{slides[sliders.right].adressBIG}</p>
+                    <p className={"lora_medium_24_black"}>{slides[sliders.right].adressSMALL}</p>
                 </div>
                 <div
-                    className={`${((isAnimated === 0) || (click === 'right')) ? 'side_picture' : 'side_picture_scale_to_center'}`}>
-                    {take_text_block("pic_right")}
+                    className={`${((sliders.animated === 0) || (click === 'right')) ? 'side_picture' : 'side_picture_scale_to_center'}`}>
+                    {slides[sliders.right].picture}
                 </div>
             </div>
         </div>

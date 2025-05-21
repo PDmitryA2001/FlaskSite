@@ -112,7 +112,6 @@
     position: relative;
     width: 648px;
     height: 510px;
-    border: 1px solid red;
 }
 .block_hero
 {
@@ -590,6 +589,7 @@
     height: 304px;
     z-index: 1;
     background: none;
+    border: none;
 }
 .button_right
 {
@@ -600,8 +600,8 @@
     height: 304px;
     z-index: 1;
     background: none;
+    border: none;
 }
-
 .slider_front_position
 {
     position: absolute;
@@ -640,7 +640,7 @@
         position: absolute;
         top: -60px;
         left: -60px;
-        transform: scale(0.71);
+        transform: scale(0.72);
     }
 
 }
@@ -715,7 +715,7 @@
     to
     {
         position: absolute;
-        left: 0px;
+        left: 1px;
         top: 56px;
         width: 304px;
         height: 304px;
@@ -736,7 +736,7 @@
     to
     {
         position: absolute;
-        left: 342px;
+        left: 343px;
         top: 56px;
         opacity: 100%;
         width: 304px;
@@ -789,7 +789,7 @@
     align-items: flex-start;
     justify-content: space-between;
     position: absolute;
-    right: 12px;
+    right: 8px;
     top: 67px;
     width: 107px;
     height: 90px;
@@ -802,8 +802,8 @@
     align-items: flex-start;
     justify-content: space-between;
     position: absolute;
-    right: 12px;
-    top: 56px;
+    right: 8px;
+    top: 67px;
     width: 107px;
     height: 90px;
     animation-name: animation_fade_out;
@@ -817,8 +817,8 @@
     align-items: flex-start;
     justify-content: space-between;
     position: absolute;
-    right: 0px;
-    top: 0px;
+    right: 8px;
+    top: 67px;
     width: 107px;
     height: 90px;
     animation-name: animation_fade_in;
@@ -903,7 +903,7 @@
     align-items: flex-end;
     justify-content: space-between;
     position: absolute;
-    left: 12px;
+    left: 8px;
     top: 67px;
     width: 107px;
     height: 90px;
@@ -916,8 +916,8 @@
     align-items: flex-end;
     justify-content: space-between;
     position: absolute;
-    left: 0px;
-    top: 0px;
+    left: 8px;
+    top: 67px;
     width: 107px;
     height: 90px;
     z-index: 1;
@@ -932,8 +932,8 @@
     align-items: flex-end;
     justify-content: space-between;
     position: absolute;
-    left: 0px;
-    top: 0px;
+    left: 8px;
+    top: 67px;
     width: 107px;
     height: 90px;
     z-index: 1;
@@ -958,7 +958,7 @@
     from
     {
         position: absolute;
-        left: 0px;
+        left: 8px;
         top: 56px;
         opacity: 100%;
         width: 304px;
