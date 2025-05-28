@@ -28,7 +28,6 @@ def send_data():
             except:
                 return jsonify({"error": "Error format"}), 400
 
-
 def check_ext(filename):
     SIGNA = {
         b'\xFF\xD8\xFF': 'jpg',

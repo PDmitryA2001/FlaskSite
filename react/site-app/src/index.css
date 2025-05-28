@@ -449,7 +449,10 @@
 {
     background-color: #68282A;
 }
-
+.disabled
+{
+    background-color: #B6B9B3;
+}
 
             /*==main fonts==*/
 @font-face
@@ -1019,7 +1022,6 @@
         top: 0;
         left: 0;
         transform: scale(100%);
-
     }
 }
 
@@ -1048,4 +1050,51 @@
         z-index: 2;
         opacity: 100%;
     }
+}
+.reserve_table_container
+{
+    width: 880px;
+    height: 686px;
+    margin: 72px auto;
+}
+.head_of_reserve
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+}
+.stages
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 28px;
+    width: min-content;
+    height: min-content;
+    margin: 40px auto;
+}
+.adress_and_date
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 868px;
+    height: 72px;
+}
+.time_selector_container
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 14px;
+    max-width: 872px;
+    height: min-content;
+    margin: 40px auto;
 }

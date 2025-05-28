@@ -1,12 +1,13 @@
-from dataclasses import replace
 from flask import Blueprint, jsonify, request
-from psycopg2.extras import RealDictCursor
-from sqlalchemy import text
 from datetime import datetime
-from extentions import DB
 import psycopg2
+from extentions import DB
 from dotenv import load_dotenv
+from sqlalchemy import select, cast, Date
 import os
+
+from models.model_branch import Branch
+from models.model_poster import Poster
 
 poster_json = Blueprint('poster_send_json', __name__)
 
@@ -17,17 +18,23 @@ def poster_send_json():
     if connection:
         try:
             date_json = datetime.fromisoformat(date_json).date()
-            data = """
-            SELECT * FROM Poster
-            WHERE date::date = %s::date
-            ORDER BY date
-            """
-            with connection.cursor() as cursor:
-                cursor.execute(data, (date_json,))
-                columns = [desc[0] for desc in cursor.description]
-                items = [dict(zip(columns, row)) for row in cursor.fetchall()]
-                print("SO GOOOD, data ----- ", items)
-                return jsonify(items)
+            query = (
+                select(
+                    Poster.title,
+                    Poster.image_url,
+                    Poster.event_date,
+                    Branch.address.label("branch_address")
+                )
+                .join(Branch)
+                .where(
+                    cast(Poster.event_date, Date) == date_json
+                )
+                .order_by(Poster.event_date)
+            )
+            data = DB.session.execute(query)
+            posters = [dict(row._asdict()) for row in data]
+            return jsonify(posters)
+
         except Exception as e:
             print(e)
             return jsonify({'error': str(e)})

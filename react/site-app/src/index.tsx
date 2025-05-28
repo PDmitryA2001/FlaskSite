@@ -3,11 +3,11 @@ import { createRoot } from 'react-dom/client';
 import { Updater } from './card_poster'
 import { DateButtons } from './button_poster_date'
 import {Slider} from "./slider";
+import {ReserveComponent} from "./ReserveComponent"
 import './index.css'
 const root = createRoot(document.getElementById('main')!);
 root.render(
     <body className={"body"}>
-
          <div className={"first_screen_background"}>
             <div className={"top_bar"}>
                 <img src={"./images/top-bar/meat-logo.png"}></img>
@@ -22,14 +22,14 @@ root.render(
                             <p style={{margin: "0px 0px 0px 8px"}} className={"firaSans_regular_16_grey"}>самое ремя</p>
                         </div>
                         <div className={"navigation"}>
-                            <a style={{margin: "0px 24px 0px 0px"}} className={"firaSans_regular_16_grey"}>О нас</a>
-                            <a style={{margin: "0px 24px 0px 0px"}} className={"firaSans_regular_16_grey"}>Меню</a>
-                            <a style={{margin: "0px 24px 0px 0px"}} className={"firaSans_regular_16_grey"}>Акции</a>
-                            <a style={{margin: "0px 24px 0px 0px"}} className={"firaSans_regular_16_grey"}>Афиша</a>
-                            <a style={{margin: "0px 24px 0px 0px"}} className={"firaSans_regular_16_grey"}>Галерея</a>
-                            <a style={{margin: "0px 24px 0px 0px"}} className={"firaSans_regular_16_grey"}>Интерьер</a>
-                            <a style={{margin: "0px 24px 0px 0px"}} className={"firaSans_regular_16_grey"}>Предзаказ и доставка</a>
-                            <a className={"firaSans_regular_16_grey"}>Контакты</a>
+                            <a style={{margin: "0px 24px 0px 0px", userSelect: "none"}} className={"firaSans_regular_16_grey"}>О нас</a>
+                            <a style={{margin: "0px 24px 0px 0px", userSelect: "none"}} className={"firaSans_regular_16_grey"}>Меню</a>
+                            <a style={{margin: "0px 24px 0px 0px", userSelect: "none"}} className={"firaSans_regular_16_grey"}>Акции</a>
+                            <a style={{margin: "0px 24px 0px 0px", userSelect: "none"}} className={"firaSans_regular_16_grey"}>Афиша</a>
+                            <a style={{margin: "0px 24px 0px 0px", userSelect: "none"}} className={"firaSans_regular_16_grey"}>Галерея</a>
+                            <a style={{margin: "0px 24px 0px 0px", userSelect: "none"}} className={"firaSans_regular_16_grey"}>Интерьер</a>
+                            <a style={{margin: "0px 24px 0px 0px", userSelect: "none"}} className={"firaSans_regular_16_grey"}>Предзаказ и доставка</a>
+                            <a style={{userSelect: "none"}} className={"firaSans_regular_16_grey"}>Контакты</a>
                         </div>
                     </div>
                     {/*<Basket/>*/}
@@ -129,7 +129,6 @@ root.render(
         </div>
             <div className={"background_4_screen"}>
                 <DateButtons/>
-
             <div className={"galerey"}>
                     <div className={"block_text_galerey_and_line"}>
                         <h3 className={"lora_medium_40_white"}>ГАЛЕРЕЯ</h3>
@@ -156,6 +155,7 @@ root.render(
                     </div>
                 </div>
             </div>
+             <ReserveComponent />
     <div className={"footer"}>
         <div className={"contacts_footer"}>
             <img src={"./images/basement/Logo.png"}></img>

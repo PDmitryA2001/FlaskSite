@@ -7,6 +7,7 @@ from route.routes import main
 from route.poster_send_json import poster_json
 from route.component_react import react_route
 import os
+from models import model_branch, model_tables, model_poster, model_menu, model_reserve, model_orderItem
 
 def create_app(config_class = Config):
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))

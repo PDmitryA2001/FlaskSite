@@ -16,7 +16,6 @@ interface dateProps {
                     try {
                         const date_today = new Date();
                         date_today.setDate(date_today.getDate() + value)
-                        console.log("date_today " + date_today)
                         const response = await fetch("/flaskapi/poster_react",
                             {
                                 method: 'POST',
@@ -25,7 +24,6 @@ interface dateProps {
                             }
                             );
                         const data_server = await response.json()
-                        console.log(currentItems.length)
                         setOldItems(currentItems)
                         setCurrentItems(data_server)
 
@@ -41,19 +39,16 @@ interface dateProps {
                 }
                 fetchData()
             }, [value]);
-
-
-
         return (
             <div className={'container'}>
                 {isAnimation &&
                     <div className={(oldItems.length === 0)   ? 'none' : "fade_out"}>
-                        {oldItems.map(item => (<DynamicPoster data={item} key={'old-&{item.id}'}/>))}
+                        {oldItems.map(item => (<DynamicPoster data={item} key={`old-${item.id}`}/>))}
                     </div>
                 }
                 {
                     <div className={(isAnimation || (currentItems.length === 0)) ? 'none' : 'fade_in'}>
-                        {currentItems.map(item => (<DynamicPoster data={item} key={'new-&{item.id}'}/>))}
+                        {currentItems.map(item => (<DynamicPoster data={item} key={`new-${item.id}`}/>))}
                     </div>
                 }
             </div>

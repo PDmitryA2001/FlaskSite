@@ -1,11 +1,7 @@
 export interface Poster {
     id: number;
-    poster_name: string;
+    title: string;
     address: string;
-    pic_name: string;
-    date: Date;
-}
-
-export interface PosterObject {
-    data: Poster;
+    image_url: string;
+    event_date: Date;
 }
