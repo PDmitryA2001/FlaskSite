@@ -2,7 +2,7 @@ from flask import Blueprint, request
 from datetime import datetime
 
 from extentions import DB
-from sqlalchemy import select, Integer, string
+from sqlalchemy import select, Integer, String
 
 from models.model_tables import Table
 from models.model_reserve import Reservation
@@ -12,13 +12,13 @@ from models.model_menu import MenuItem
 
 upload_order = Blueprint('upload_data', __name__)
 @upload_order.route('/flaskapi/upload_order', methods=['POST'])
-def upload_order():
+def upload_order_funk():
     data = request.get_json()
     table_id = DB.session.execute(
         select(Table.id)
         .where(
             (Table.number, Integer) == data['table'],
-            (Branch.address, string) == data['branch'],
+            (Branch.address, String) == data['branch'],
         )
     ).scalar()
     to_reserve = {

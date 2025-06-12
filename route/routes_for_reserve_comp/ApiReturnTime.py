@@ -1,14 +1,6 @@
 from flask import Blueprint, jsonify, request
-from datetime import datetime
-import psycopg2
-from sqlalchemy.util import symbol
-
-from extentions import DB
-from dotenv import load_dotenv
-from sqlalchemy import select, cast, Date, and_, not_, exists
-from sqlalchemy.sql import func
-
-import os
+from datetime import datetime, timedelta
+from collections import defaultdict
 
 from models.model_tables import Table
 from models.model_reserve import Reservation
@@ -16,53 +8,51 @@ from models.model_branch import Branch
 
 time_reserve = Blueprint('time_reserve', __name__)
 @time_reserve.route('/flaskapi/time_reserve', methods=['POST'])
-def time_reserve():
-    # adr, date, qua
-    #  time
+def time_reserve_funk():
     adr = request.get_json()['adress']
-    date = request.get_json()['date']
-    qua = request.get_json()['quantity']
+    date_str = request.get_json()['date']
+    try:
+        date_local = datetime.strptime(date_str, '%Y-%m-%d').date()
+    except ValueError:
+        return {"error": "Неверный формат даты."}, 400
+    branch = Branch.query.filter_by(address=adr).first()
+    if not branch:
+        return {"numbers": [], "reservations": []}
+    tables = Table.query.filter(
+        Table.branch_id == branch.id
+    ).all()
+    if not tables:
+        return {"numbers": [], "reservations": []}
+    table_capacity_map = {}
+    numbers = []
+    for table in tables:
+        table_capacity_map[table.id] = table.capacity
+        numbers.append(table.number)
+    start_date = datetime.combine(date_local, datetime.min.time())
+    end_date = start_date + timedelta(days=1)
 
-    free_query =(
-    select(
-        Table.number.label('free_tables'),
-        func.sum(Table.capacity).label('free_capacity')
-    )
-    .join(Branch)
-    .where
-    (
-        and_(
-            cast(Branch, Table.branch_id) == adr,
-            not_(Table.id.in_
-                (
-                select(Reservation.table_id)
-                .where(cast(Reservation.reservation_time, Date) == date)
-            )
-            )
-        )
-    )
-    .group_by(Table.number)
-    )
-    free = DB.session.execute(free_query).mappings().all()
-    if free["free_capacity"] < qua:
-        reserved_query = (
-            select(
-                Reservation.table_id.label('reserved_table'),
-                Reservation.reservation_time.label('reserved_time'),
-            )
-            .join(Table)
-            .join(Branch)
-            .where
-                (
-                and_(
-                    Branch.address == adr,
-                    cast(Reservation.reservation_time, Date) == date
-                )
-            ),
-        )
-        reserved = DB.session.execute(reserved_query).mappings().all()
-        result_execute = reserved + free
-        result = [dict(row._asdict()) for row in result_execute]
-        return jsonify(result)
-    else:
-        return jsonify({"free_capacity": "none"})
+    reservations = Reservation.query.filter(
+        Reservation.table_id.in_(t.id for t in tables),
+        Reservation.reservation_time >= start_date,
+        Reservation.reservation_time < end_date,
+        Reservation.status == 'confirmed',
+    ).all()
+
+    time_groups = defaultdict(lambda: {'table_ids': set(), 'capacity': 0})
+    for res in reservations:
+        if res.table_id in table_capacity_map:
+            res_time = res.reservation_time.time()
+            time_groups[res_time]['table_ids'].add(res.table_id)
+            time_groups[res_time]['capacity'] += table_capacity_map[res.table_id]
+    sorted_reservations = []
+    for time_key in sorted(time_groups.keys()):
+        group = time_groups[time_key]
+        sorted_reservations.append({
+            "reservation_time": time_key.strftime("%H:%M"),
+            "r_tables": list(group['table_ids']),
+            "r_capacity": group['capacity']
+        })
+    return {
+            "numbers": numbers,
+            "reservations": sorted_reservations
+        }

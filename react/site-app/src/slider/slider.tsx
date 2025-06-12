@@ -33,9 +33,6 @@ export const Slider = () =>
     const right_click = async () =>
     {
         setClick('right')
-        console.log(sliders.left + " LEVO ==========BEFORE CLICK====================")
-        console.log(sliders.left + " PRAVO")
-        console.log(sliders.left + " CENTER")
         setSliders(prev => (
             {
                 front: prev.front,

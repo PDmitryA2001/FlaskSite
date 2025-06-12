@@ -1,9 +1,8 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { Updater } from './card_poster'
-import { DateButtons } from './button_poster_date'
-import {Slider} from "./slider";
-import {ReserveComponent} from "./ReserveComponent"
+import { DateButtons } from './poster/button_poster_date'
+import {Slider} from "./slider/slider";
+import {ReserveComponent} from "./reserve/ReserveComponent"
 import './index.css'
 const root = createRoot(document.getElementById('main')!);
 root.render(
@@ -49,7 +48,6 @@ root.render(
             </div>
          </div>
          <div className={"container_second_screen"}>
-
              <Slider />
                 <div className={"block_hero"}>
                     <div className={"text_block_hero_with_line"}>

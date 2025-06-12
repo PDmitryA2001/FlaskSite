@@ -6,6 +6,9 @@ from route.image_to_react import image_to_react
 from route.routes import main
 from route.poster_send_json import poster_json
 from route.component_react import react_route
+from route.routes_for_reserve_comp.upload_data_to_db import upload_order
+from route.routes_for_reserve_comp.ApiReturnTime import time_reserve
+from route.routes_for_reserve_comp.return_adress import return_address
 import os
 from models import model_branch, model_tables, model_poster, model_menu, model_reserve, model_orderItem
 
@@ -24,6 +27,9 @@ def create_app(config_class = Config):
     app.register_blueprint(upload_to_db)
     app.register_blueprint(image_to_react)
     app.register_blueprint(poster_json)
+    app.register_blueprint(upload_order)
+    app.register_blueprint(time_reserve)
+    app.register_blueprint(return_address)
 
     app.register_blueprint(react_route, url_prefix='/')
 

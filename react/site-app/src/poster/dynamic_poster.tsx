@@ -1,6 +1,6 @@
 import React from "react";
 
-import {Poster} from "./types/Poster";
+import {Poster} from "@/types/Poster";
 
 const DynamicPoster = ({data}: { data: Poster }) =>
     {

@@ -6,7 +6,7 @@ from extentions import DB
 from models.model_menu import MenuItem
 
 return_menu = Blueprint('return_menu', __name__)
-@return_menu.route('/flaskapi/return_menu', methods=['GET', 'POST'])
+@return_menu.route('/flaskapi/return_menu', methods=['GET'])
 def return_menu():
     category = request.get_json()['category']
     query = (

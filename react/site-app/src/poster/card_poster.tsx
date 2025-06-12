@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { Poster } from './types/Poster'
+import { Poster } from '@/types/Poster'
 import DynamicPoster from "./dynamic_poster";
 interface dateProps {
     value: number
