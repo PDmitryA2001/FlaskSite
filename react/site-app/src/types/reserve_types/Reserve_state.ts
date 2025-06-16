@@ -18,10 +18,14 @@ export type data_stage_1 = {
   adress: string | null;
   guests: number | null;
   r_tables: number[] | null;
-  all_tables: number[] | null;
+  all_tables: tables[] | null;
+}
+type tables = {
+  capacity: number;
+  number: number;
 }
 export type data_stage_2 = {
-  table: string | null;
+  table: string[] | null;
 }
 export type data_stage_3 = {
   additionalInfo: string | null;

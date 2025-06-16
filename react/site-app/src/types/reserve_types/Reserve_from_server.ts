@@ -1,4 +1,7 @@
-
+type tables = {
+  capacity: number;
+  number: number;
+}
 export interface Reserve_from_server
 {
     r_capacity: number;
@@ -8,7 +11,7 @@ export interface Reserve_from_server
 export interface Array_reserve
 {
     reservations: Reserve_from_server[];
-    numbers: number[];
+    numbers: tables[];
 }
 export interface Render_interface
 {

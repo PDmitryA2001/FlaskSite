@@ -41,13 +41,33 @@ export const ReserveContext = createContext<{
 
 export const ReserveComponent = () =>
 {
+
     const [state, dispatch] = useReducer(reserveReducer, initialState);
     const contextValue = useMemo(() => ({ state, dispatch }), [state]);
     return(
         <ReserveContext.Provider value={contextValue}>
-            { state.stage === 1 && <SetTime/> }
-            { state.stage === 2 && <Stage_2/>}
-            { state.stage === 3 && <Stage_3/>}
+            <div className={"reserve_table_container"}>
+                <div className={"head_of_reserve"}>
+                    <img src={"./images/reserve_table/Line_42.png"}/>
+                    <h2 className={"lora_blod_40_red"}>БРОНЬ СТОЛИКОВ</h2>
+                    <img src={"./images/reserve_table/Line_42.png"}/>
+                </div>
+                <div className={"stages"}>
+                    <div className={"main_button_red"}>
+                        <p className={"firaSans_regular_16_grey"} style={{color: "white", userSelect: "none"}}>Дата и
+                            время</p>
+                    </div>
+                    <div className={"main_button_red disabled"} style={{pointerEvents: "none", cursor: "not-allowed"}}>
+                        <p className={"firaSans_regular_16_grey"} style={{color: "#5C6164"}}>Выбор столиков</p>
+                    </div>
+                    <div className={"main_button_red disabled"} style={{pointerEvents: "none", cursor: "not-allowed"}}>
+                        <p className={"firaSans_regular_16_grey"} style={{color: "#5C6164"}}>Ваши данные</p>
+                    </div>
+                </div>
+                {state.stage === 1 && <SetTime/>}
+                {state.stage === 2 && <Stage_2/>}
+                {state.stage === 3 && <Stage_3/>}
+            </div>
         </ReserveContext.Provider>
     )
 }

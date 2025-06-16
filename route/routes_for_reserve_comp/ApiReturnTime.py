@@ -27,7 +27,7 @@ def time_reserve_funk():
     numbers = []
     for table in tables:
         table_capacity_map[table.id] = table.capacity
-        numbers.append(table.number)
+        numbers.append({"number": table.number, "capacity": table.capacity})
     start_date = datetime.combine(date_local, datetime.min.time())
     end_date = start_date + timedelta(days=1)
 
