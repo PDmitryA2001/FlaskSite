@@ -14,7 +14,6 @@ export const Stroke_info = (selectedItems: string[]) =>
     }
         const get_P_tables = () =>
     {
-        console.log(selectedItems.length)
         if (selectedItems.length <= 1)
         return (
             <p>Столик номер {selectedItems}</p>

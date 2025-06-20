@@ -29,7 +29,9 @@ export const SetTime = () => {
             }]
         }
     );
+
     const [selectedTime, setSelectedTime] = useState<string>(state.Stage1.datatime.split('T')[1].substring(0, 5))
+    console.log(state.Stage1.datatime)
     const handleNextStage = () => {
         const date_string = date + 'T' + selectedTime + ':00Z'
         const date_date = new Date(date_string)
@@ -136,7 +138,7 @@ export const SetTime = () => {
                 </div>
                 <p className={"firaSans_regular_16_grey"} style={{userSelect: "none"}}>Бронь столиков на 5 и более гостей<br/> предусматривает депозит: 1000руб./чел.</p>
             </div>
-            <button type={"button"} className={`${!(selectedTime) ? "main_button_red disabled" : "main_button_red"}`} onClick={handleNextStage} style={{position: "absolute", right: "0", bottom: "0"}}>
+            <button type={"button"} className={`${!(selectedTime.substring(0, 2) != '00') ? "main_button_red disabled" : "main_button_red"}`} onClick={handleNextStage} style={{position: "absolute", right: "0", bottom: "0"}}>
                 <p className={"firaSans_regular_16_grey"} style={{color: "white", userSelect: "none"}}>Продолжить бронь</p>
             </button>
         </div>

@@ -58,15 +58,12 @@ export const Stage_2 = () =>
 
     const handleClick = (e: string) =>
     {
-        if (state.Stage1.guests) {
             if (state.Stage1.guests <= 2) {
                 setSelectedItems(prevState => {
                     return [e]
                 })
             } else {
-                console.log("ostatok: ", Math.ceil(state.Stage1.guests / 2))
-                console.log("array: ", selectedItems.length)
-                if (selectedItems.length <= Math.ceil(state.Stage1.guests / 2))
+                if (selectedItems.length < Math.ceil(state.Stage1.guests / 2))
                         setSelectedItems(prevState => {
                     if (prevState.includes(e)) {
                         return (prevState.filter(item => item !== e))
@@ -79,19 +76,22 @@ export const Stage_2 = () =>
                         return (prevState.filter(item => item !== e))
                     })
                 }
+                if (selectedItems [0] === '' ) {
+                setSelectedItems(prevState => {
+                        return [e]
+                    })
             }
-        }
+            }
     }
 
 
     const check_lengh = () =>
     {
-        if (Math.ceil(state.Stage1.guests / 2) >= selectedItems.length) {
-            console.log(Math.ceil(state.Stage1.guests / 2))
-            return true
+        if (Math.ceil(state.Stage1.guests / 2) <= (selectedItems.length) && (selectedItems[0] != '')) {
+            return false
         }
         else
-            return false
+            return true
     }
     const return_reserved_tables = (num: number) =>
     {

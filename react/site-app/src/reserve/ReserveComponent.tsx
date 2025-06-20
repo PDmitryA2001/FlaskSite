@@ -14,6 +14,10 @@ import {
 const datetime_today = () =>
 {
     const date_today = new Date()
+    date_today.setHours(3)
+    date_today.setMinutes(0)
+    date_today.setMilliseconds(0)
+    console.log(date_today)
     return date_today.toISOString()
 }
     const initialState: ReserveState = {
@@ -85,8 +89,8 @@ export const ReserveComponent = () =>
                             время{state.stage}</p>
                     </div>
                     <div className={`${(state.stage < 2) ? "main_button_red disabled animated_to_grey" : ""}
-                                     ${(state.Stage2.table.length === 1 && state.stage === 2) ? "main_button_red animated_from_grey" : ""}
-                                     ${(state.Stage2.table.length > 1 && state.stage > 2) ? "main_button_red animated_to_green" : "main_button_red animated_to_red"}`}
+                                     ${(state.Stage2.table[0] === '' && state.stage === 2) ? "main_button_red animated_from_grey" : ""}
+                                     ${(state.Stage2.table[0] != '' && state.stage > 2) ? "main_button_red animated_to_green" : "main_button_red animated_to_red"}`}
                          style={{pointerEvents: "none", cursor: "not-allowed"}}>
                         <p className={"firaSans_regular_16_grey"} style={{color: "white", userSelect: "none"}}>Выбор столиков</p>
                     </div>
