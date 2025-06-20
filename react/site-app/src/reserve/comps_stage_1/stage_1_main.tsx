@@ -6,14 +6,15 @@ import {Simulate} from "react-dom/test-utils";
 import {server_address} from "../../types/reserve_types/address_type";
 
 export const SetTime = () => {
-    const [guests, setGuests] = useState<number>(1);
+    const {state, dispatch} = useContext(ReserveContext);
+    const [guests, setGuests] = useState<number>(state.Stage1.guests);
     const [adress, setAdress] = useState<server_address[]>(
         [{
             id: 0,
-            address: '',
+            address: state.Stage1.adress,
         }]);
-    const [selectedAdr, setSelectedAdr] = useState<string>('');
-    const [date, setDate] = useState<string>('');
+    const [selectedAdr, setSelectedAdr] = useState<string>(state.Stage1.adress);
+    const [date, setDate] = useState<string>(state.Stage1.datatime.split('T')[0]);
     const [dataServer, setDataServer] = useState<Array_reserve>(
         {
             reservations:
@@ -28,41 +29,32 @@ export const SetTime = () => {
             }]
         }
     );
-    const [selectedTime, setSelectedTime] = useState<string>()
-
-    const {dispatch} = useContext(ReserveContext);
+    const [selectedTime, setSelectedTime] = useState<string>(state.Stage1.datatime.split('T')[1].substring(0, 5))
     const handleNextStage = () => {
         const date_string = date + 'T' + selectedTime + ':00Z'
         const date_date = new Date(date_string)
         const date_iso = date_date.toISOString()
         const res_tables = dataServer.reservations.find(item => item.reservation_time === selectedTime)?.r_tables
-        console.log(dataServer.numbers)
         dispatch({
             type: "SET_STAGE_1",
             payload: {
                 datatime: date_iso,
                 adress: selectedAdr,
                 guests: guests,
-                r_tables: res_tables ?? null,
+                r_tables: res_tables ?? [0],
                 all_tables: dataServer.numbers,
             }
          })
         dispatch({
+            type: "SET_STAGE_2",
+            payload:{
+                table: ['']
+            }
+        })
+        dispatch({
             type: "NEXT_STAGE",
         })
     }
-  // datatime: string | null;
-  // adress: string | null;
-  // guests: number | null;
-  // r_tables: number[] | null;
-  // all_tables: number[] | null;
-
-
-    useEffect(() => {
-        const date_today = new Date();
-        const formattedDate = date_today.toISOString().split('T')[0];
-        setDate(formattedDate)
-    }, []);
      const fetchData = async () => {
              try {
                  const response = await fetch("/flaskapi/time_reserve",
@@ -77,8 +69,6 @@ export const SetTime = () => {
                      }
                  );
                  const data = await response.json();
-                 console.log(data)
-                 console.log(data)
                  if (!response.ok) {
                      throw new Error(data.status === 'error' ? data.message : 'Unknown error');
                  }
@@ -106,7 +96,7 @@ export const SetTime = () => {
         setSelectedTime(value)
     }
     return (
-        <div>
+        <div className={`${(state.stage === 1) ? "fade_in" : "fade_out"}`}>
             <form className={"adress_and_date"}>
                 <div style={{display: "flex", flexDirection: "column", gap: "8px"}}>
                     <label form={"adress"}><p className={"firaSans_regular_16_grey"} style={{color: "black", userSelect: "none"}}>Выбор ресторана</p></label>

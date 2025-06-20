@@ -1,4 +1,4 @@
-import React, {Reducer, useContext} from "react";
+import React, {Reducer, useContext, useEffect} from "react";
 import {SetTime} from "./comps_stage_1/stage_1_main"
 import {Stage_2} from "./comps_stage_2/stage_2_select_table";
 import {Stage_3} from "./comps_stage_3/stage_3_additionally_and_submit";
@@ -11,11 +11,34 @@ import {
     ReserveState
 } from "@/types/reserve_types/Reserve_state";
 
+const datetime_today = () =>
+{
+    const date_today = new Date()
+    return date_today.toISOString()
+}
     const initialState: ReserveState = {
       stage: 1,
-      Stage1: null, // Данные из stage_1
-      Stage2: null, // Данные из stage_2
-      Stage3: null, // Данные из stage_3
+      Stage1:
+          {
+              datatime: datetime_today(),
+              adress: '',
+              guests: 1,
+              r_tables: [0],
+              all_tables:
+                  [{
+                      capacity: 0,
+                      number: 0,
+                  }],
+          },
+      Stage2: {
+          table: [''],
+      },
+      Stage3: {
+            additionalInfo: '',
+            name: '',
+            phone: '',
+            email: '',
+      },
     };
     function reserveReducer(state: ReserveState, action: ReserveAction): ReserveState {
       switch (action.type) {
@@ -44,6 +67,8 @@ export const ReserveComponent = () =>
 
     const [state, dispatch] = useReducer(reserveReducer, initialState);
     const contextValue = useMemo(() => ({ state, dispatch }), [state]);
+    if (state.Stage2.table)
+        console.log(state.Stage2.table.length ,"Прошло")
     return(
         <ReserveContext.Provider value={contextValue}>
             <div className={"reserve_table_container"}>
@@ -53,15 +78,20 @@ export const ReserveComponent = () =>
                     <img src={"./images/reserve_table/Line_42.png"}/>
                 </div>
                 <div className={"stages"}>
-                    <div className={"main_button_red"}>
+                    <div className={`${(state.stage === 1) ? "main_button_red animated_to_red" : "main_button_red animated_to_green"}
+                                    ${(state.stage != 1) ? "main_button_red background_green" : "main_button_red"}`}
+                    style={{pointerEvents: "none", cursor: "not-allowed"}}>
                         <p className={"firaSans_regular_16_grey"} style={{color: "white", userSelect: "none"}}>Дата и
-                            время</p>
+                            время{state.stage}</p>
                     </div>
-                    <div className={"main_button_red disabled"} style={{pointerEvents: "none", cursor: "not-allowed"}}>
-                        <p className={"firaSans_regular_16_grey"} style={{color: "#5C6164"}}>Выбор столиков</p>
+                    <div className={`${(state.stage < 2) ? "main_button_red disabled animated_to_grey" : ""}
+                                     ${(state.Stage2.table.length === 1 && state.stage === 2) ? "main_button_red animated_from_grey" : ""}
+                                     ${(state.Stage2.table.length > 1 && state.stage > 2) ? "main_button_red animated_to_green" : "main_button_red animated_to_red"}`}
+                         style={{pointerEvents: "none", cursor: "not-allowed"}}>
+                        <p className={"firaSans_regular_16_grey"} style={{color: "white", userSelect: "none"}}>Выбор столиков</p>
                     </div>
-                    <div className={"main_button_red disabled"} style={{pointerEvents: "none", cursor: "not-allowed"}}>
-                        <p className={"firaSans_regular_16_grey"} style={{color: "#5C6164"}}>Ваши данные</p>
+                    <div className={`${(state.stage === 3) ? "main_button_red disabled animated_from_grey" : "main_button_red animated_to_grey"}`} style={{pointerEvents: "none", cursor: "not-allowed"}}>
+                        <p className={"firaSans_regular_16_grey"} style={{color: "white", userSelect: "none"}}>Ваши данные</p>
                     </div>
                 </div>
                 {state.stage === 1 && <SetTime/>}

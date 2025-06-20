@@ -563,7 +563,7 @@
     flex-direction: row;
     gap: 20px;
     flex-wrap: wrap;
-    animation-duration: 500ms;
+    animation-duration: 1000ms;
     animation-name: goodbye;
 }
 @keyframes goodbye {
@@ -585,7 +585,7 @@
     gap: 20px;
     flex-wrap: wrap;
     animation-name: hello;
-    animation-duration: 500ms;
+    animation-duration: 1000ms;
 }
 @keyframes hello {
     from
@@ -597,7 +597,7 @@
     to
     {
         opacity: 100%;
-        transform: translateX(5px);
+        transform: translateX(0px);
         visibility: visible;
     }
 }
@@ -1099,8 +1099,8 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 868px;
-    height: 72px;
+    min-width: 868px;
+    min-height: 72px;
 }
 .time_selector_container
 {
@@ -1292,7 +1292,104 @@
 {
     transform: rotate(-90deg)
 }
-.information
-{
 
+.container_stage_3
+{
+    min-width: min-content;
+    min-height: 460px;
+}
+.input_left_column_stage_3
+{
+    width: 422px;
+    height: 48px;
+    margin-top: 8px;
+    background: none;
+    border: 1px solid grey;
+    border-radius: 8px;
+}
+.flex_gap_for_stage_3
+{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.information_block
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 48px;
+    margin-top: 28px;
+}
+.buttons_stage_3
+{
+    width: 236px;
+    height: 18px;
+}
+.animated_to_red
+{
+    animation-name: red_fade_in;
+    animation-duration: 1000ms;
+    animation-fill-mode: forwards;
+}
+.animated_to_green
+{
+    animation-name: green_fade_in;
+    animation-duration: 1000ms;
+    animation-fill-mode: forwards;
+}
+
+@keyframes red_fade_in {
+    from {
+        background-color: green;
+    }
+    to {
+        background-color: #8A191D;
+    }
+}
+@keyframes green_fade_in {
+    from
+    {
+        background-color: #8A191D;
+    }
+    to
+    {
+        background-color: green;
+    }
+}
+.background_green
+{
+        background-color: green;
+}
+.animated_to_grey
+{
+    animation-name: to_grey_fade_in;
+    animation-duration: 1000ms;
+    animation-fill-mode: forwards;
+}
+.animated_from_grey
+{
+    animation-name: from_grey_fade_in;
+    animation-duration: 1000ms;
+    animation-fill-mode: forwards;
+}
+@keyframes to_grey_fade_in {
+    from {
+        background-color: #8A191D;
+    }
+    to {
+    background-color: #B6B9B3;
+    }
+}
+@keyframes from_grey_fade_in {
+from   {
+    background-color: #B6B9B3;
+
+}
+    to{
+        background-color: #8A191D;
+
+    }
 }

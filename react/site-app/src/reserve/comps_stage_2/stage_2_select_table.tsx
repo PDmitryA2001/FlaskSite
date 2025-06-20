@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {ReserveContext} from "../ReserveComponent";
-
+import {Stroke_info} from "../info_reserve"
 interface PositionStyle
     {
         left?: string;
@@ -10,8 +10,9 @@ interface PositionStyle
     }
 export const Stage_2 = () =>
 {
-    const [selectedItems, setSelectedItems] = useState<string[]>([])
     const {state, dispatch} = useContext(ReserveContext);
+
+    const [selectedItems, setSelectedItems] = useState<string[]>(state.Stage2.table)
     const dynamic_elements: PositionStyle[] = [
         {left: "3px", top: "3px"},
         {left: "53px", top: "3px"},
@@ -54,30 +55,18 @@ export const Stage_2 = () =>
             type: "NEXT_STAGE",
         })
     }
-    const get_P_tables = () =>
-    {
-        console.log(selectedItems.length)
-        if (selectedItems.length <= 1)
-        return (
-            <p>Столик номер {selectedItems}</p>
-        )
-        else
-            return (
-                <p>Столики номер{selectedItems.map((item) => {return (" " + item)})}</p>
-            )
-    }
+
     const handleClick = (e: string) =>
     {
-        let not_null = (state.Stage1?.guests)
-        if (not_null) {
-            if (not_null <= 2) {
+        if (state.Stage1.guests) {
+            if (state.Stage1.guests <= 2) {
                 setSelectedItems(prevState => {
                     return [e]
                 })
             } else {
-                console.log("ostatok: ", Math.ceil(not_null / 2))
+                console.log("ostatok: ", Math.ceil(state.Stage1.guests / 2))
                 console.log("array: ", selectedItems.length)
-                if (selectedItems.length < Math.ceil(not_null / 2))
+                if (selectedItems.length <= Math.ceil(state.Stage1.guests / 2))
                         setSelectedItems(prevState => {
                     if (prevState.includes(e)) {
                         return (prevState.filter(item => item !== e))
@@ -92,84 +81,30 @@ export const Stage_2 = () =>
                 }
             }
         }
-        console.log(selectedItems)
     }
-    const get_sklonenie = () =>
-    {
-        if (state.Stage1?.guests) {
-            if (state.Stage1?.guests % 10 === 1)
-                return "гостя"
-            else
-                return "гостей"
-        }
-    }
-    const get_date_str = (date: Date) =>
-  {
-      const mon = (month: number) =>
-          {
-              switch (month) {
-                  case 0: return "января";
-                  case 1: return "февраля";
-                  case 2: return "марта";
-                  case 3: return "апреля";
-                  case 4: return "мая";
-                  case 5: return "июня";
-                  case 6: return "июля";
-                  case 7: return "августа";
-                  case 8: return "сентября";
-                  case 9: return "октября";
-                  case 10: return "ноября";
-                  case 11: return "декабря";
-              }
-      }
-      if (date.getMinutes().toString().length === 1)
-        return (date.getDay() + " " + mon(date.getMonth()) +
-                " " + date.getFullYear() + " в "
-                + (date.getUTCHours()) + ":" + date.getMinutes() + "0" + ".");
-      else
-        return (date.getDay() + " " + mon(date.getMonth()) +
-                " " + date.getFullYear() + " в "
-                + (date.getUTCHours()) + ":" + date.getMinutes() + ".");
-  }
-    const stroke_information = () =>
-    {
-        console.log (state.Stage1?.datatime)
-        let date = state.Stage1?.datatime
-        console.log("DATATIME from STAGE 2", date)
-        if (date) {
-            const bol = new Date(date)
-            console.log(bol)
-            date = get_date_str(bol)
-        }
-        console.log("DATA FROM STAGE 1   ", state.Stage1?.all_tables)
-        return (
-            <div className={"information"}>
-                <p>{date}</p>
-                {get_P_tables()}
-                <p>для {state.Stage1?.guests} {get_sklonenie()}</p>
-                <p>{state.Stage1?.r_tables}</p>
-            </div>
-        )
-    }
+
+
     const check_lengh = () =>
     {
-        if (state.Stage1?.guests) {
-            if (Math.ceil(state.Stage1?.guests / 2) > selectedItems.length) return true
+        if (Math.ceil(state.Stage1.guests / 2) >= selectedItems.length) {
+            console.log(Math.ceil(state.Stage1.guests / 2))
+            return true
         }
-        return false
+        else
+            return false
     }
     const return_reserved_tables = (num: number) =>
     {
-        if (state.Stage1?.r_tables)
-            if (state.Stage1?.r_tables.includes(num)) return true
-        return false
+        if (state.Stage1.r_tables.includes(num))
+            return true
+        else
+            return false
     }
     const return_elements = () =>
     {
-        return(state.Stage1?.all_tables?.map((item, index) =>
+        return(state.Stage1.all_tables.map((item, index) =>
             {
                 const d_elem = dynamic_elements[index]
-                console.log(state.Stage1?.r_tables, "elements")
                 const style_str = "table cap_"+item.capacity+" "
                 return(
                 <button type={"button"}
@@ -185,7 +120,7 @@ export const Stage_2 = () =>
         )
     }
     return (
-        <div>
+        <div className={`${(state.stage === 2) ? "fade_in" : "fade_out"}`}>
             <div className={"select_table"}>
                 {return_elements()}
                 <div className={"inactive_objects zvuk"} style={{left: "183px", bottom: "220px"}}>Дровер</div>
@@ -198,7 +133,7 @@ export const Stage_2 = () =>
             <div className={"bottom_container_for_select_table"}>
                 <button className={"main_button_red"} style={{width: "141px", height: "50px"}} onClick={() => dispatch({type: "PREV_STAGE"})}><p
                     className={"firaSans_regular_16_grey"} style={{color: "white"}} >Назад</p></button>
-                {stroke_information()}
+                {Stroke_info(selectedItems)}
                 <button className={`${check_lengh() ? "main_button_red disabled" : "main_button_red"}`} onClick={() => handle_next()}><p className={"firaSans_regular_16_grey"} style={{color: "white"}}>Продолжить</p></button>
             </div>
         </div>
